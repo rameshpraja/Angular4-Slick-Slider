@@ -1,26 +1,103 @@
-# MyApp
+# ngx-slick
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.6.
+## Installation
 
-## Development server
+To install ngx-slick library, run:
+$ npm install ngx-slick --save
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+after installation, go to your Root module : App Module
 
-## Code scaffolding
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+import { AppComponent } from './app.component';
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+// Import your library
+import { SlickModule } from 'ngx-slick';
 
-## Running unit tests
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    // Specify your library as an import
+    SlickModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+Include Jquery and Slick css/js in your application :
+go to index.html and paste below libraries :
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
+<script src="https://unpkg.com/slick-carousel@1.6.0/slick/slick.js"></script>
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Once your library is imported, you can use its components, directives and pipes in your application
+
+1. goto app.component.ts file
+
+import { Component } from '@angular/core';
+
+//import slick module
+import {SlickModule} from 'ngx-slick';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'app';
+
+//Start - slides array and functions
+  slides = [
+    {img: "http://placehold.it/350x150/000000"},
+    {img: "http://placehold.it/350x150/111111"},
+    {img: "http://placehold.it/350x150/333333"},
+    {img: "http://placehold.it/350x150/666666"}
+  ];
+  slideConfig = {"slidesToShow": 4, "slidesToScroll": 4};
+
+  addSlide() {
+    this.slides.push({img: "http://placehold.it/350x150/777777"})
+  }
+
+  removeSlide() {
+    this.slides.length = this.slides.length - 1;
+  }
+
+  afterChange(e) {
+    console.log('afterChange');
+  }
+  //End - slides array and functions
+}
+
+2. goto  app.component.html
+ <!-- You can now use your library component in app.component.html -->
+  <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
+    <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+          <img src="{{ slide.img }}" alt="" width="100%">
+    </div>
+</ngx-slick>
+
+<button (click)="addSlide()">Add</button>
+<button (click)="removeSlide()">Remove</button>
+<button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
+<button (click)="slickModal.unslick()">unslick</button>
+
+
+## Run Project
+Now to run the project in your local machine, you just need to run :
+
+    ng serve
+
+so you will start a web server on http://localhost:4200
 
 ## Further help
 
