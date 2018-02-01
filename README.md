@@ -1,6 +1,5 @@
 # ngx-slick
 
-[Example](https://embed.plnkr.co/fblxzfPneL66950A4VDM/)
 
 ## Installation
 
