@@ -1,15 +1,21 @@
 # ngx-slick
 
+[Example](https://embed.plnkr.co/fblxzfPneL66950A4VDM/)
+
 ## Installation
 
-To install ngx-slick library, run:
+To install this library, run:
+
+```bash
 $ npm install ngx-slick --save
+```
 
-after installation, go to your Root module : App Module
 
+after installation, go to your Root module : `App Module`
+
+```typescript
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 
 import { AppComponent } from './app.component';
 
@@ -22,6 +28,7 @@ import { SlickModule } from 'ngx-slick';
   ],
   imports: [
     BrowserModule,
+
     // Specify your library as an import
     SlickModule.forRoot()
   ],
@@ -29,18 +36,34 @@ import { SlickModule } from 'ngx-slick';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+```
 
-
-Include Jquery and Slick css/js in your application :
-go to index.html and paste below libraries :
+- Include Jquery and Slick css/js in your application - go to index.html and paste below libraries :
+```
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
 <script src="https://unpkg.com/slick-carousel@1.6.0/slick/slick.js"></script>
+```
 
-Once your library is imported, you can use its components, directives and pipes in your application
+Once your library is imported, you can use its components, directives and pipes in your Angular application:
+```html
+  1. goto  app.component.html
+ <!-- You can now use your library component in app.component.html -->
+  <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
+    <div ngxSlickItem *ngFor="let slide of slides" class="slide">
+          <img src="{{ slide.img }}" alt="" width="100%">
+    </div>
+</ngx-slick>
 
-1. goto app.component.ts file
+<button (click)="addSlide()">Add</button>
+<button (click)="removeSlide()">Remove</button>
+<button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
+<button (click)="slickModal.unslick()">unslick</button>
+```
+
+```javascript
+  2. goto app.component.ts file
 
 import { Component } from '@angular/core';
 
@@ -77,19 +100,7 @@ export class AppComponent {
   }
   //End - slides array and functions
 }
-
-2. goto  app.component.html
- <!-- You can now use your library component in app.component.html -->
-  <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
-    <div ngxSlickItem *ngFor="let slide of slides" class="slide">
-          <img src="{{ slide.img }}" alt="" width="100%">
-    </div>
-</ngx-slick>
-
-<button (click)="addSlide()">Add</button>
-<button (click)="removeSlide()">Remove</button>
-<button (click)="slickModal.slickGoTo(2)">slickGoto 2</button>
-<button (click)="slickModal.unslick()">unslick</button>
+```
 
 
 ## Run Project
